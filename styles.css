@@ -697,8 +697,9 @@ h2 {
   h1 { font-size:clamp(3.6rem,17vw,5.7rem); }
   .hero-roles { grid-template-columns:1fr; }
   .hero-roles > div + div { padding-left:0;border-top:1px solid var(--line);border-left:0; }
-  .hero-stage { min-height:480px; }
-  .portrait-frame { top:21%;left:6%;width:84%; }
+  .hero-stage { min-height:620px; }
+  .portrait-frame { top:11%;left:8%;width:80%; }
+  .portrait-crop { aspect-ratio:1 / 1; }
   .tag-one { top:8%; }
   .tag-two { right:2%;bottom:10%; }
   .orb-small { width:76px; }
