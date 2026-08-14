@@ -1,34 +1,36 @@
-# Personal Academic Homepage
+# Rijian Song — Personal Academic Homepage
 
-This is a lightweight GitHub Pages homepage for an academic and translational research profile.
+This repository contains [Rijian Song’s personal academic homepage](https://rijian-song.github.io/), built with [al-folio](https://github.com/alshedivat/al-folio) and deployed through GitHub Pages.
 
-## How to edit
+## Site structure
 
-- Edit `index.html` to update your name, email, affiliation, publications, links, and profile text.
-- Edit `styles.css` only if you want to adjust layout, colors, or spacing.
-- Update the Google Scholar and LinkedIn links if you want them to point to specific profile pages rather than search pages.
+- **Profile** — current affiliation, research focus, and selected work
+- **Research** — injectable hydrogels, wet-tissue adhesion, and tissue repair
+- **Publications** — publication records maintained in `_bibliography/papers.bib`
+- **Applications** — research platforms and translational directions
+- **News** — selected research updates
+- **CV** — reserved for the full CV that will be added later
+- **Contact** — public professional links
 
-## Recommended GitHub Pages setup
+Teaching, talks, blog posts, and repository listings are intentionally not included in this version.
 
-1. Create a public GitHub repository named `USERNAME.github.io`, replacing `USERNAME` with your GitHub username.
-2. Upload these files to the repository root:
-   - `index.html`
-   - `styles.css`
-   - `.nojekyll`
-   - `README.md`
-3. In GitHub, open **Settings > Pages**.
-4. Set the source to **Deploy from a branch**.
-5. Select the `main` branch and `/root`.
-6. After GitHub finishes deployment, the site will be available at:
+## Local preview
 
-```text
-https://USERNAME.github.io
+The site uses Ruby, Bundler, Jekyll, and the pinned al-folio plugin set in `Gemfile.lock`.
+
+```bash
+bundle install
+bundle exec jekyll serve
 ```
 
-## Optional custom domain
+Then open `http://localhost:4000`.
 
-You can add a paid custom domain later, such as `yourname.com`, and bind it in **Settings > Pages**. This is optional; the `USERNAME.github.io` address is free.
+## Updating content
 
-## Template note
+- Edit `_pages/about.md` for the homepage profile text.
+- Edit `_pages/research.md`, `_projects/`, and `_news/` for research content.
+- Add or update publication records in `_bibliography/papers.bib`.
+- Add the final CV data to `_data/cv.yml` when ready.
+- Keep the light Apple / Anthropic Serif Text-inspired styling in `_sass/` and the site-wide settings in `_config.yml`.
 
-The structure is inspired by common academic GitHub Pages templates such as Academic Pages, but this version is intentionally simpler: no Jekyll setup, no Ruby dependency, and fewer files to maintain.
+The exact Anthropic Serif Text font is used when it is available on the visitor’s device; the public fallback stack uses Newsreader and system serif fonts.
