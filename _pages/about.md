@@ -31,3 +31,5 @@ My work sits at the interface of **polymer chemistry**, **biomedical engineering
 I am a postdoctoral researcher at University College Dublin and Chief Technology Officer at [Blafar Ltd.](https://blafar.com/). My research focuses on hydrogel structural design, wet-tissue adhesion, chronic wound repair, and translational biomaterials.
 
 The [research overview]({{ '/research/' | relative_url }}) describes the three connected systems behind this work. The [publications page]({{ '/publications/' | relative_url }}) is populated from my public Google Scholar record, with the latest publications added as they become available.
+
+The [previous version of this website]({{ '/legacy/' | relative_url }}) remains available as an earlier design and content archive.
