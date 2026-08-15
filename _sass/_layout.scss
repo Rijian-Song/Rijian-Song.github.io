@@ -8,9 +8,11 @@ body {
   padding-bottom: 70px;
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
-  font-family: "Anthropic Serif Text", "Newsreader", "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.96rem;
   font-weight: 400;
-  letter-spacing: -0.008em;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
 
   h1,
   h2,
@@ -18,9 +20,9 @@ body {
   h4,
   h5,
   h6 {
-    font-family: inherit;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
     scroll-margin-top: 66px;
   }
 }
@@ -35,15 +37,175 @@ body.sticky-bottom-footer {
   padding-bottom: 0;
 }
 
+// Keep the main navigation centered with an Apple-like system sans UI layer.
+#navbar {
+  min-height: 44px;
+  width: 100%;
+  padding: 0;
+  border-bottom-color: rgba(23, 23, 22, 0.12);
+  background-color: rgba(245, 245, 247, 0.76);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 1px 0 rgba(23, 23, 22, 0.04);
+  opacity: 1;
+
+  .container {
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+    padding-left: clamp(1rem, 3vw, 2.5rem);
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+    box-sizing: border-box;
+    position: relative;
+    align-items: center;
+  }
+
+  .navbar-collapse-main {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max-content;
+    flex: 0 0 auto;
+    justify-content: center;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  .navbar-menu-list {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .nav-link {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.015em;
+  }
+
+  #search-toggle .nav-link {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+#navbar .navbar-brand.title {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 28px;
+  margin-right: 1.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+
+  .site-logo {
+    display: block;
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+    object-fit: contain;
+  }
+
+  .site-title-text {
+    display: inline-block;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #navbar {
+    .navbar-collapse-main {
+      position: static;
+      width: 100%;
+      flex: 1 1 100%;
+      justify-content: flex-start;
+      text-align: left;
+      transform: none;
+    }
+
+    .navbar-menu-list {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+
 .container {
   max-width: v.$max-content-width;
+  padding-left: clamp(1.25rem, 2.5vw, 1.75rem);
+  padding-right: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
 // Profile
 .profile {
   img {
     width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
   }
+}
+
+@media (min-width: 576px) {
+  body:has(.profile) .profile {
+    width: 34%;
+  }
+
+  body:has(.profile) .profile.float-right {
+    margin-left: 0.75rem;
+  }
+}
+
+// Keep the single mission statement visually balanced beside the portrait.
+.post article > .clearfix > p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: none;
+}
+
+body:has(.profile) .post article > .clearfix > p:first-child {
+  position: relative;
+  top: 4.25rem;
+  max-width: 65%;
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+}
+
+body:has(.profile) .post article > h2 {
+  clear: both;
+}
+
+@media (max-width: 575.98px) {
+  body:has(.profile) .post article > .clearfix > p:first-child {
+    position: static;
+    max-width: none;
+    margin-top: 0;
+    margin-bottom: 1.15rem;
+  }
+}
+
+.post-title {
+  font-size: clamp(2.15rem, 4.2vw, 3.15rem);
+  line-height: 1.08;
+}
+
+.post > article > h2 > a {
+  text-transform: capitalize;
+}
+
+.post > article {
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.post > article > .clearfix > p {
+  margin-bottom: 1.15rem;
 }
 
 // Content layout uses Bootstrap's grid system with responsive columns
@@ -56,6 +218,85 @@ body.sticky-bottom-footer {
 
 // Publications layout is defined in _includes/bib_search.liquid
 // Uses jekyll-scholar for BibTeX parsing and Bootstrap cards for display
+
+.publication-doi {
+  color: var(--global-theme-color);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.14em;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--global-hover-color);
+  }
+}
+
+ol.bibliography {
+  li {
+    .abbr {
+      figure {
+        margin: 0;
+      }
+
+      .preview {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: contain;
+        background-color: #ffffff;
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  ol.bibliography > li > .row {
+    align-items: center;
+
+    > .abbr {
+      flex: 0 0 15%;
+      max-width: 15%;
+      margin-right: 0;
+    }
+
+    > .col-sm-8 {
+      flex: 0 0 85%;
+      max-width: 85%;
+    }
+  }
+}
+
+// Keep publication metadata compact while preserving the serif reading voice.
+.publications,
+.post > article > .publications {
+  ol.bibliography {
+    li {
+      margin-bottom: 1.35rem;
+      line-height: 1.38;
+
+      .title {
+        font-size: 0.98rem;
+        font-weight: 600;
+      }
+
+      .author,
+      .periodical,
+      .publication-doi {
+        font-size: 0.88rem;
+      }
+
+      .abbr {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.publications > h1,
+.publications > h2 {
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+}
 
 /*****************************************************************************
 * Projects

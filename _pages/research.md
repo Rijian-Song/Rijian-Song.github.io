@@ -1,30 +1,55 @@
 ---
 layout: page
-title: research
+title: Research
 permalink: /research/
-description: Three connected research systems for translational biomaterials.
+description: Research platforms and translational application directions.
 nav: true
 nav_order: 1
+display_categories: [research]
+horizontal: false
 ---
 
-My research connects **polymer chemistry**, **biomedical engineering**, and **translation**. The central question is how to make a hydrogel perform under real biological and operational constraints—not only in an idealised test.
-
-## Injectable hydrogel mechanics
-
-Tough, self-healing, and adaptable networks that preserve practical injectability while improving mechanical performance.
-
-![A tough injectable hydrogel being extruded from a syringe]({{ '/assets/images/tough-injectable-hydrogel.jpg' | relative_url }})
-
-## Wet-tissue adhesion
-
-Cohesion–adhesion balanced materials for wet, moving, and biologically complex surfaces where conventional adhesives struggle.
-
-![A hydrogel conforming to a wet tissue-like interface]({{ '/assets/images/wet-tissue-interface.jpg' | relative_url }})
-
-## Chronic wound repair
-
-Injectable and self-healing systems for antibacterial treatment, therapeutic delivery, and difficult-to-heal tissue environments.
-
-![A hydrogel scaffold for tissue repair]({{ '/assets/images/tissue-repair-scaffold.jpg' | relative_url }})
-
-Across these systems, I work from network architecture and tissue interfaces through performance evidence, quality logic, and translational opportunity.
+<!-- The former Applications page now lives here under the Research label. -->
+<div class="projects research-projects">
+{% if site.enable_project_categories and page.display_categories %}
+  {% for category in page.display_categories %}
+  <a id="{{ category }}" href=".#{{ category }}">
+    <h2 class="category">{{ category }}</h2>
+  </a>
+  {% assign categorized_projects = site.projects | where: "category", category %}
+  {% assign sorted_projects = categorized_projects | sort: "importance" %}
+  {% if page.horizontal %}
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2">
+    {% for project in sorted_projects %}
+      {% include projects_horizontal.liquid %}
+    {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="row row-cols-1 row-cols-md-3">
+    {% for project in sorted_projects %}
+      {% include projects.liquid %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endfor %}
+{% else %}
+  {% assign sorted_projects = site.projects | sort: "importance" %}
+  {% if page.horizontal %}
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2">
+    {% for project in sorted_projects %}
+      {% include projects_horizontal.liquid %}
+    {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="row row-cols-1 row-cols-md-3">
+    {% for project in sorted_projects %}
+      {% include projects.liquid %}
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endif %}
+</div>

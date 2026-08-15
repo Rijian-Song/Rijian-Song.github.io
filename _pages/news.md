@@ -1,9 +1,9 @@
 ---
 layout: page
-title: news
+title: News
 permalink: /news/
 nav: true
-nav_order: 4
+nav_order: 3
 ---
 
-{% include news.liquid %}
+There are no news updates at the moment.
