@@ -11,26 +11,26 @@ $red-color-dark: #b71c1c !default;
 $orange-color: #f29105 !default;
 $blue-color: #0076df !default;
 $blue-color-dark: #00369f !default;
-$cyan-color: #2698ba !default;
+$cyan-color: #2b7a78 !default;
 $light-cyan-color: color.adjust($cyan-color, $lightness: 25%);
 $green-color: #00ab37 !default;
 $green-color-lime: #b7d12a !default;
 $green-color-dark: #009f06 !default;
 $green-color-light: #ddffdd !default;
 $green-color-bright: #11d68b !default;
-$purple-color: #d97757 !default;
+$purple-color: #2b7a78 !default;
 $light-purple-color: color.adjust($purple-color, $lightness: 25%);
 $pink-color: #f92080 !default;
 $pink-color-light: #ffdddd !default;
 $yellow-color: #efcc00 !default;
 
-$grey-color: #716f6a !default;
+$grey-color: #6e6e73 !default;
 $grey-color-light: color.adjust($grey-color, $lightness: 40%);
-$grey-color-dark: #292824;
+$grey-color-dark: #1d1d1f;
 $grey-900: #212529;
 
-$white-color: #faf9f5 !default;
-$black-color: #171716 !default;
+$white-color: #f5f5f7 !default;
+$black-color: #1d1d1f !default;
 
 // Theme colors
 
@@ -49,4 +49,4 @@ $back-to-top-height: $back-to-top-diameter;
 $back-to-top-width: $back-to-top-diameter;
 
 // Max width default
-$max-content-width: 930px !default;
+$max-content-width: 1040px !default;
