@@ -1,0 +1,55 @@
+{% assign footer_pages = site.pages | sort: 'nav_order' %}
+
+{% if site.footer_fixed %}
+  <footer class="site-footer fixed-bottom" role="contentinfo">
+    <div class="container mt-0">
+      <div class="footer-inner">
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <ul class="footer-nav-list">
+            <li>
+              <a class="footer-nav-link" href="{{ '/' | relative_url }}">About</a>
+            </li>
+            {% for p in footer_pages %}
+              {% if p.nav and p.autogen == null and p.dropdown != true %}
+                <li>
+                  <a class="footer-nav-link" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+        <div class="footer-copyright">&copy; Copyright 2026 Rijian Song</div>
+      </div>
+    </div>
+  </footer>
+{% else %}
+  <footer class="site-footer sticky-bottom mt-5" role="contentinfo">
+    {% if site.newsletter.enabled %}
+      {% if site.plugins contains 'al_newsletter' %}
+        {% include plugins/al_newsletter_form_center.liquid %}
+      {% else %}
+        {% include newsletter.liquid %}
+      {% endif %}
+    {% endif %}
+
+    <div class="container">
+      <div class="footer-inner">
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <ul class="footer-nav-list">
+            <li>
+              <a class="footer-nav-link" href="{{ '/' | relative_url }}">About</a>
+            </li>
+            {% for p in footer_pages %}
+              {% if p.nav and p.autogen == null and p.dropdown != true %}
+                <li>
+                  <a class="footer-nav-link" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+        <div class="footer-copyright">&copy; Copyright 2026 Rijian Song</div>
+      </div>
+    </div>
+  </footer>
+{% endif %}

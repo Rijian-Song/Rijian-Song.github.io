@@ -28,8 +28,9 @@ body {
 }
 
 body.fixed-top-nav {
-  // Add some padding for the nav-bar.
-  padding-top: 57px;
+  // Match the fixed header's measured height so the first paint and the
+  // post-load progress-bar setup use the same content offset.
+  padding-top: 45px;
 }
 
 body.sticky-bottom-footer {
@@ -142,51 +143,70 @@ body.sticky-bottom-footer {
   padding-right: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
-// Profile
-.profile {
-  img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: center;
+// About hero: keep the mission and portrait in one deliberate section instead
+// of relying on the theme's floating profile layout. This keeps their vertical
+// rhythm stable as the text wraps at different viewport widths.
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 34%);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5.5rem);
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  margin-bottom: clamp(4rem, 8vw, 6.5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  border-bottom: 1px solid rgba(23, 23, 22, 0.12);
+}
+
+.about-hero-copy {
+  min-width: 0;
+}
+
+.about-mission {
+  max-width: 48rem;
+  margin: 0;
+  font-size: clamp(1.18rem, 1.75vw, 1.55rem);
+  line-height: 1.58;
+  letter-spacing: -0.018em;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.about-mission strong {
+  font-weight: 700;
+}
+
+.about-portrait {
+  width: 100%;
+  max-width: 25rem;
+  margin: 0 0 0 auto;
+}
+
+.about-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.45rem;
+  box-shadow: 0 0.35rem 1.1rem rgba(23, 23, 22, 0.14);
+}
+
+body:has(.about-hero) .post article > h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 767.98px) {
+  .about-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3rem;
   }
-}
 
-@media (min-width: 576px) {
-  body:has(.profile) .profile {
-    width: 34%;
-  }
-
-  body:has(.profile) .profile.float-right {
-    margin-left: 0.75rem;
-  }
-}
-
-// Keep the single mission statement visually balanced beside the portrait.
-.post article > .clearfix > p {
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: none;
-}
-
-body:has(.profile) .post article > .clearfix > p:first-child {
-  position: relative;
-  top: 4.25rem;
-  max-width: 65%;
-  margin-top: 3.5rem;
-  margin-bottom: 3.5rem;
-}
-
-body:has(.profile) .post article > h2 {
-  clear: both;
-}
-
-@media (max-width: 575.98px) {
-  body:has(.profile) .post article > .clearfix > p:first-child {
-    position: static;
-    max-width: none;
-    margin-top: 0;
-    margin-bottom: 1.15rem;
+  .about-portrait {
+    max-width: 32rem;
+    margin-right: auto;
   }
 }
 
@@ -206,6 +226,98 @@ body:has(.profile) .post article > h2 {
 
 .post > article > .clearfix > p {
   margin-bottom: 1.15rem;
+}
+
+/******************************************************************************
+ * Footer
+ ******************************************************************************/
+
+.site-footer {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  border-top: 1px solid rgba(23, 23, 22, 0.12);
+  background-color: rgba(245, 245, 247, 0.76);
+  color: var(--global-text-color);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 -1px 0 rgba(23, 23, 22, 0.04);
+
+  .container {
+    max-width: v.$max-content-width;
+  }
+}
+
+.site-footer.sticky-bottom {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.site-footer.fixed-bottom .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 44px;
+}
+
+.footer-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-nav-link,
+.footer-copyright {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+.footer-nav-link {
+  color: var(--global-text-color);
+  text-decoration: none;
+  opacity: 1;
+  transition: color 160ms ease, opacity 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--global-theme-color);
+    text-decoration: none;
+    opacity: 1;
+  }
+}
+
+.footer-copyright {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--global-text-color);
+  white-space: nowrap;
+  text-align: right;
+  opacity: 0.9;
+}
+
+@media (max-width: 767.98px) {
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .footer-copyright {
+    margin-left: 0;
+    align-self: flex-end;
+  }
 }
 
 // Content layout uses Bootstrap's grid system with responsive columns
