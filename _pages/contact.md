@@ -1,6 +1,6 @@
 ---
 layout: page
-title: contact
+title: Contact
 permalink: /contact/
 description: Research, technology, and collaboration links.
 nav: true
