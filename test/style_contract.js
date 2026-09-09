@@ -3,7 +3,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 const read = (p) => fs.readFileSync(p, "utf8");
 const config = read("_config.yml");
-assert.match(config, /^baseurl:\s*(?:#.*)?$/m, "root-domain baseurl must remain empty");
+// The deployment YAML updater serializes an empty value as null.
+assert.match(config, /^baseurl:[ \t]*(?:null|~|""|'')?[ \t]*(?:#.*)?$/m, "root-domain baseurl must remain empty");
 assert.match(config, /^theme: al_folio_core$/m);
 assert.match(config, /^bib_search: true/m);
 const workflow = read(".github/workflows/deploy.yml");
