@@ -1,3 +1,5 @@
+> Personal-site context: this repository is Rijian Song’s customized root-domain website. Follow `AGENTS.md`; local template, Sass and asset overrides are supported and tracked. Starter-only routing restrictions below describe the upstream framework, not this site.
+
 # JavaScript Instructions (v1.x)
 
 Scope: starter JS and related setup scripts

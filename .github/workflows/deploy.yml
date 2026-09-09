@@ -5,60 +5,28 @@ on:
     branches:
       - master
       - main
-    paths:
-      - "assets/**"
-      - "**.bib"
-      - "**.html"
-      - "**.js"
-      - "**.liquid"
-      - "**/*.md"
-      - "**.yml"
-      - "Gemfile"
-      - "Gemfile.lock"
-      - "!.github/workflows/axe.yml"
-      - "!.github/workflows/broken-links.yml"
-      - "!.github/workflows/deploy-docker-tag.yml"
-      - "!.github/workflows/deploy-image.yml"
-      - "!.github/workflows/docker-slim.yml"
-      - "!.github/workflows/lighthouse-badger.yml"
-      - "!.github/workflows/prettier.yml"
-      - "!lighthouse_results/**"
-      - "!docs/CONTRIBUTING.md"
-      - "!docs/CUSTOMIZE.md"
-      - "!docs/FAQ.md"
-      - "!docs/INSTALL.md"
-      - "!README.md"
+    paths-ignore:
+      - "docs/**"
+      - "README.md"
+      - "AGENTS.md"
+      - "CLAUDE.md"
   pull_request:
     branches:
       - master
       - main
-    paths:
-      - "assets/**"
-      - "**.bib"
-      - "**.html"
-      - "**.js"
-      - "**.liquid"
-      - "**/*.md"
-      - "**.yml"
-      - "Gemfile"
-      - "Gemfile.lock"
-      - "!.github/workflows/axe.yml"
-      - "!.github/workflows/broken-links.yml"
-      - "!.github/workflows/deploy-docker-tag.yml"
-      - "!.github/workflows/deploy-image.yml"
-      - "!.github/workflows/docker-slim.yml"
-      - "!.github/workflows/lighthouse-badger.yml"
-      - "!.github/workflows/prettier.yml"
-      - "!lighthouse_results/**"
-      - "!docs/CONTRIBUTING.md"
-      - "!docs/CUSTOMIZE.md"
-      - "!docs/FAQ.md"
-      - "!docs/INSTALL.md"
-      - "!README.md"
+    paths-ignore:
+      - "docs/**"
+      - "README.md"
+      - "AGENTS.md"
+      - "CLAUDE.md"
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: site-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -85,7 +53,7 @@ jobs:
       - name: Install JS deps 📦
         run: npm ci
       - name: Update _config.yml ⚙️
-        uses: fjogeleit/yaml-update-action@main
+        uses: fjogeleit/yaml-update-action@dffe9a5223d84653c13374032382f6bb5de8e5ef # Previously deployed revision
         with:
           commitChange: false
           valueFile: "_config.yml"
@@ -99,8 +67,29 @@ jobs:
           bundle exec jekyll build
       - name: Purge unused CSS 🧹
         run: |
-          npm install -g purgecss
-          purgecss -c purgecss.config.js
+          npm run build:purge
+      - name: Build approved visual baseline
+        env:
+          JEKYLL_ENV: production
+        run: |
+          baseline="$RUNNER_TEMP/rijian-site-baseline"
+          git fetch origin a2263b84183e33e00169baf09b574ef75c5a291c
+          mkdir -p "$baseline"
+          git archive a2263b84183e33e00169baf09b574ef75c5a291c | tar -x -C "$baseline"
+          (cd "$baseline" && BUNDLE_PATH="$GITHUB_WORKSPACE/vendor/bundle" BUNDLE_GEMFILE="$baseline/Gemfile" bundle exec jekyll build && node "$GITHUB_WORKSPACE/node_modules/purgecss/bin/purgecss.js" -c purgecss.config.js)
+          echo "BASELINE_DIR=$baseline/_site" >> "$GITHUB_ENV"
+      - name: Validate site contract and visual parity
+        run: |
+          npm run lint:style-contract
+          npx playwright install --with-deps chromium webkit
+          npm run test:visual
+      - name: Upload visual report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: output/playwright/report
+          if-no-files-found: ignore
       - name: Deploy 🚀
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4

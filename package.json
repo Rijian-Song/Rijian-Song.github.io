@@ -3,13 +3,14 @@
     "lint:prettier": "prettier . --check",
     "lint:style-contract": "node test/style_contract.js",
     "test:visual": "playwright test --config test/visual/playwright.config.js",
-    "test:visual:update": "playwright test --config test/visual/playwright.config.js --update-snapshots"
+    "build:purge": "purgecss -c purgecss.config.js"
   },
   "devDependencies": {
-    "@playwright/test": "^1.56.1",
+    "@playwright/test": "1.58.2",
     "@shopify/prettier-plugin-liquid": "^1.10.0",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
-    "prettier": "^3.8.0"
+    "prettier": "^3.8.0",
+    "purgecss": "8.0.0"
   }
 }

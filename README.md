@@ -1,36 +1,36 @@
 # Rijian Song — Personal Academic Homepage
 
-This repository contains [Rijian Song’s personal academic homepage](https://rijian-song.github.io/), built with [al-folio](https://github.com/alshedivat/al-folio) and deployed through GitHub Pages.
+[Rijian Song’s personal academic website](https://rijian-song.github.io/) uses al-folio/Jekyll and GitHub Pages at the domain root.
 
 ## Site structure
 
-- **Profile** — current affiliation, research focus, and selected work
-- **Research** — injectable hydrogels, wet-tissue adhesion, and tissue repair
-- **Publications** — publication records maintained in `_bibliography/papers.bib`
-- **Applications** — research platforms and translational directions
-- **News** — selected research updates
-- **CV** — reserved for the full CV that will be added later
-- **Contact** — public professional links
+- **About** — `_pages/about.md`, current profile and selected publications.
+- **Research** — `_pages/research.md` and four detail pages in `_projects/`.
+- **Publications** — `_bibliography/papers.bib` and `_layouts/bib.liquid`.
+- **News** — `_pages/news.md` and `_news/`.
+- **Notes** — `_pages/notes.md`, personal writing.
+- **Contact** — `_pages/contact.md`, professional links.
 
-Teaching, talks, blog posts, and repository listings are intentionally not included in this version.
+`/cv/` remains a placeholder. `/projects/` is a compatibility entry to Research; `/projects/<slug>/` contains research details. The legacy site is retained pending a separate decision about its public URL.
 
-## Local preview
+## Build and preview
 
-The site uses Ruby, Bundler, Jekyll, and the pinned al-folio plugin set in `Gemfile.lock`.
+Use the pinned gems in `Gemfile.lock` and JavaScript dependencies in `package-lock.json`.
 
-```bash
+```sh
 bundle install
+npm ci
+bundle exec jekyll build
+npm run build:purge
 bundle exec jekyll serve
 ```
 
-Then open `http://localhost:4000`.
+Open `http://localhost:4000/`. The existing light visual design uses system sans-serif fonts, teal accents, and custom Sass overrides. Preserve it during maintenance.
 
-## Updating content
+## Verification and deployment
 
-- Edit `_pages/about.md` for the homepage profile text.
-- Edit `_pages/research.md`, `_projects/`, and `_news/` for research content.
-- Add or update publication records in `_bibliography/papers.bib`.
-- Add the final CV data to `_data/cv.yml` when ready.
-- Keep the light Apple / Anthropic Serif Text-inspired styling in `_sass/` and the site-wide settings in `_config.yml`.
+See [AGENTS.md](AGENTS.md) for maintenance boundaries and [visual testing](test/visual/README.md) for baseline preparation. The deployment workflow builds, purges CSS using the locked project dependency, and runs the site contract and visual/interaction checks before deployment. Pull requests run checks without deploying.
 
-The exact Anthropic Serif Text font is used when it is available on the visitor’s device; the public fallback stack uses Newsreader and system serif fonts.
+Source baseline for this maintenance: `3abfe8a97addec69ddad464a46d1679b1847adda`. YAML update Action is pinned to the exact revision recorded by that deployment. PurgeCSS is pinned to 8.0.0, the registry's latest release since January 2026; the September build log did not print its resolved version, so exact historical equivalence is not asserted. Framework and Ruby gem versions remain unchanged.
+
+The publication-approved Research content is captured in `a2263b84183e33e00169baf09b574ef75c5a291c`, which is now the visual baseline. This preserves the approved content changes while checking the maintenance changes against them.

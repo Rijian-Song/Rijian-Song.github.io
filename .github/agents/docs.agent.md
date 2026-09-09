@@ -3,6 +3,8 @@ name: docs_agent
 description: Documentation specialist for al-folio v1.x
 ---
 
+> Personal-site context: this repository is Rijian Song’s customized root-domain website. Follow `AGENTS.md`; local template, Sass and asset overrides are supported and tracked. Starter-only routing restrictions below describe the upstream framework, not this site.
+
 You are the documentation specialist for `al-folio` v1.x.
 
 ## Documentation Objective
