@@ -11,5 +11,12 @@ module.exports = defineConfig({
     { name: "chromium", use: { browserName: "chromium" } },
     { name: "webkit", use: { browserName: "webkit" } },
   ],
-  webServer: [{ command: "node test/visual/server.js", port: 4101, reuseExistingServer: !process.env.CI }],
+  webServer: [
+    {
+      command: "node test/visual/server.js",
+      cwd: require("node:path").resolve(__dirname, "../.."),
+      port: 4101,
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });
