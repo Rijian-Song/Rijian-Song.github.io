@@ -27,3 +27,7 @@ git diff --check
 The visual suite compares two complete builds in the same browser/OS/font environment at 390, 576, 768, 1024 and 1440 px. Prepare the approved baseline as documented in `test/visual/README.md`. Do not update the baseline to conceal a failure. Review and obtain approval for intentional visual changes before advancing its commit.
 
 Run Prettier on changed supported files. Do not reformat unrelated source. Check Publications and homepage together after changing bibliography rendering. Keep image dimensions in `_data/publication_image_dimensions.json` consistent with original images; review the eager first-cover key in `_layouts/bib.liquid` when adding a newer publication.
+
+Publication and cover counts in the tests are derived from `papers.bib` by `test/publication_counts.js`; do not hard-code them. The site contract checks recorded cover dimensions against the image files. Keep new covers around 300×400 px: large additional covers have made WebKit full-page captures of `/publications/` unstable in CI.
+
+For visual changes, commit the content first, then advance the baseline SHA to that commit. Prefer a branch and pull request: pull requests run the full build, contract and visual suite without deploying. Merge with a merge commit, not a squash, so the baseline SHA stays reachable. Local macOS WebKit can differ from CI; the CI result decides.

@@ -1,6 +1,7 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
+const expected = require("./publication_counts");
 const read = (p) => fs.readFileSync(p, "utf8");
 const config = read("_config.yml");
 // The deployment YAML updater serializes an empty value as null.
@@ -15,14 +16,33 @@ assert(workflow.indexOf("npm run test:visual") < workflow.indexOf("- name: Deplo
 for (const p of ["_includes/header.liquid", "_includes/footer.liquid", "_layouts/bib.liquid", "_sass/_layout.scss"]) assert(fs.existsSync(p));
 const pub = read("_site/publications/index.html");
 const covers = [...pub.matchAll(/<img\b[^>]*class="preview[^>]*>/g)].map((m) => m[0]);
-assert.equal(covers.length, 30);
+assert.equal(covers.length, expected.covers);
 assert.equal(covers.filter((s) => s.includes('loading="eager"')).length, 1);
-assert.equal(covers.filter((s) => s.includes('loading="lazy"')).length, 29);
+assert.equal(covers.filter((s) => s.includes('loading="lazy"')).length, expected.covers - 1);
 assert(covers[0].includes('loading="eager"'), "first cover should be eager");
 for (const s of covers) {
   assert.match(s, /width="[1-9]\d*"/);
   assert.match(s, /height="[1-9]\d*"/);
   assert(s.includes("data-zoomable"));
+}
+// Recorded cover dimensions must match the image files, e.g. after a cover is replaced or resized.
+const imageSize = (file) => {
+  const b = fs.readFileSync(file);
+  if (b.toString("ascii", 1, 4) === "PNG") return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  if (b.toString("ascii", 0, 3) === "GIF") return [b.readUInt16LE(6), b.readUInt16LE(8)];
+  for (let i = 2; i < b.length; ) {
+    const marker = b[i + 1];
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)];
+    i += 2 + b.readUInt16BE(i + 2);
+  }
+  throw new Error(file + ": unknown image format");
+};
+for (const [name, { width, height }] of Object.entries(JSON.parse(read("_data/publication_image_dimensions.json")))) {
+  assert.deepEqual(
+    imageSize(path.join("assets/img/publication_preview", name)),
+    [width, height],
+    name + ": recorded dimensions differ from the file"
+  );
 }
 assert(!read("_site/index.html").match(/<img\b[^>]*class="preview[^>]*loading="lazy"/));
 assert(pub.includes("bibsearch.js"));
@@ -56,4 +76,6 @@ for (const file of htmlFiles) {
     links++;
   }
 }
-console.log(`Site contract passed: ${htmlFiles.length} HTML files, ${links} local references, 30 original covers (1 eager / 29 lazy).`);
+console.log(
+  `Site contract passed: ${htmlFiles.length} HTML files, ${links} local references, ${expected.covers} original covers (1 eager / ${expected.covers - 1} lazy).`
+);
