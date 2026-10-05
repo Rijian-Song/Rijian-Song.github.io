@@ -48,7 +48,7 @@
           {% assign entry_path = entry.preview | prepend: '/assets/img/publication_preview/' %}
           {% assign preview_dimensions = site.data.publication_image_dimensions[entry.preview] %}
           {% assign preview_loading = 'eager' %}
-          {% if page.permalink == '/publications/' and entry.key != 'li2026endometrial' %}
+          {% if page.permalink == '/publications/' and entry.key != 'li2026glucocorticoid' %}
             {% assign preview_loading = 'lazy' %}
           {% endif %}
           <figure>

@@ -15,9 +15,9 @@ assert(workflow.indexOf("npm run test:visual") < workflow.indexOf("- name: Deplo
 for (const p of ["_includes/header.liquid", "_includes/footer.liquid", "_layouts/bib.liquid", "_sass/_layout.scss"]) assert(fs.existsSync(p));
 const pub = read("_site/publications/index.html");
 const covers = [...pub.matchAll(/<img\b[^>]*class="preview[^>]*>/g)].map((m) => m[0]);
-assert.equal(covers.length, 29);
+assert.equal(covers.length, 30);
 assert.equal(covers.filter((s) => s.includes('loading="eager"')).length, 1);
-assert.equal(covers.filter((s) => s.includes('loading="lazy"')).length, 28);
+assert.equal(covers.filter((s) => s.includes('loading="lazy"')).length, 29);
 assert(covers[0].includes('loading="eager"'), "first cover should be eager");
 for (const s of covers) {
   assert.match(s, /width="[1-9]\d*"/);
@@ -56,4 +56,4 @@ for (const file of htmlFiles) {
     links++;
   }
 }
-console.log(`Site contract passed: ${htmlFiles.length} HTML files, ${links} local references, 29 original covers (1 eager / 28 lazy).`);
+console.log(`Site contract passed: ${htmlFiles.length} HTML files, ${links} local references, 30 original covers (1 eager / 29 lazy).`);
