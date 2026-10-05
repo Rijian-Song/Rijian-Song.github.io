@@ -1,6 +1,6 @@
 # Personal-site visual and interaction checks
 
-The approved source baseline is `9bf1cbed44bd46ad597c9d06206a7a8c4493e8be`. Build it independently, then purge its CSS with the same locked PurgeCSS executable as the candidate. Keep its generated output outside the site source. The deployment workflow provides an executable example.
+The approved source baseline is `b356094a8c04af2bf40c1f0d3327191beb845096`. Build it independently, then purge its CSS with the same locked PurgeCSS executable as the candidate. Keep its generated output outside the site source. The deployment workflow provides an executable example.
 
 Locally, put that output at `../baseline-site`, or set `BASELINE_DIR` to its absolute path. Build and purge the candidate in `_site`, then run:
 
