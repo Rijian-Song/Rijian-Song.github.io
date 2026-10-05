@@ -105,6 +105,8 @@ test("menu, filter, zoom and scrolling remain usable", async ({ browser }, info)
     await expect(p.locator(".medium-zoom-image--opened")).toHaveCount(0);
     await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await expect(p.locator("#back-to-top")).toBeVisible();
+    // WebKit draws scaled images with low-quality interpolation right after a scroll and repaints them later.
+    await p.waitForTimeout(1000);
   }
   await compare(before, after, info, "scroll");
   for (const p of [before, after]) {
