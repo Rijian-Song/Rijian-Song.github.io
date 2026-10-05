@@ -7,9 +7,9 @@ test("publication covers defer requests without losing original dimensions", asy
   });
   await page.goto("http://127.0.0.1:4101/publications/", { waitUntil: "networkidle" });
   expect(covers.size).toBeGreaterThan(0);
-  expect(covers.size).toBeLessThan(29);
+  expect(covers.size).toBeLessThan(30);
   const images = page.locator("img.preview");
-  await expect(images).toHaveCount(29);
+  await expect(images).toHaveCount(30);
   expect(await images.evaluateAll((all) => all.every((img) => Number(img.getAttribute("width")) > 0 && Number(img.getAttribute("height")) > 0))).toBe(
     true
   );
@@ -25,10 +25,10 @@ test("publication filtering waits 300 ms and cancels superseded input", async ({
   await page.clock.runFor(200);
   await page.locator("#bibsearch").fill("thiol-rich");
   await page.clock.runFor(200);
-  await expect(page.locator(".bibliography > li:visible")).toHaveCount(29);
+  await expect(page.locator(".bibliography > li:visible")).toHaveCount(30);
   await page.clock.runFor(100);
   await expect(page.locator(".bibliography > li:visible")).toHaveCount(1);
   await page.locator("#bibsearch").fill("");
   await page.clock.runFor(300);
-  await expect(page.locator(".bibliography > li:visible")).toHaveCount(29);
+  await expect(page.locator(".bibliography > li:visible")).toHaveCount(30);
 });

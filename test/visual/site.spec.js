@@ -86,14 +86,14 @@ test("menu, filter, zoom and scrolling remain usable", async ({ browser }, info)
   for (const p of [before, after]) {
     await p.keyboard.press("Escape");
     await expect(p.getByRole("button", { name: "Toggle navigation" })).toHaveAttribute("aria-expanded", "false");
-    await expect(p.locator(".bibliography > li:visible")).toHaveCount(29);
+    await expect(p.locator(".bibliography > li:visible")).toHaveCount(30);
     await p.locator("#bibsearch").fill("thiol-rich");
     await expect(p.locator(".bibliography > li:visible")).toHaveCount(1);
   }
   await compare(before, after, info, "filter");
   for (const p of [before, after]) {
     await p.locator("#bibsearch").fill("");
-    await expect(p.locator(".bibliography > li:visible")).toHaveCount(29);
+    await expect(p.locator(".bibliography > li:visible")).toHaveCount(30);
     await Promise.all([
       p.evaluate(
         () => new Promise((resolve) => document.querySelector("img[data-zoomable]").addEventListener("medium-zoom:opened", resolve, { once: true }))
