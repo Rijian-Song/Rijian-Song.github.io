@@ -7,7 +7,7 @@ This repository is `Rijian-Song/Rijian-Song.github.io`, a customized personal si
 - Preserve the current light system-font design, teal accents, spacing, image proportions, navigation and interactions. Do not redesign or upgrade the framework during maintenance.
 - Preserve original publication images, bibliography metadata, author markings and sorting. Verify scholarly changes against authoritative sources.
 - Local `_layouts/`, `_includes/`, `_sass/` and asset overrides are intentional and supported. Review upstream differences and maintain `.al-folio-overrides.yml` when changing them.
-- Keep changes within the user's request. Route, content, navigation and feature changes need corresponding authorization. Preserve `legacy/`, `/cv/` and `/projects/` unless their behaviour is explicitly in scope.
+- Keep changes within the user's request. Route, content, navigation and feature changes need corresponding authorization. Preserve `/cv/` and `/projects/` unless their behaviour is explicitly in scope.
 - A local modification does not authorize pushing, merging or publishing. Never use the force-push manual deployment script without explicit authorization.
 - Upstream documentation in `docs/` describes the framework; this file and README describe this site's actual setup. Do not apply upstream starter-only prohibitions to this personal site.
 
