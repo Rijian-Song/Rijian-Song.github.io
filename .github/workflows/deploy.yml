@@ -73,9 +73,9 @@ jobs:
           JEKYLL_ENV: production
         run: |
           baseline="$RUNNER_TEMP/rijian-site-baseline"
-          git fetch origin 9d7ac5f3e29703ece2278d59ffbb5967b77763e2
+          git fetch origin 010c521fa7fdd9139c18368c96f8da68c3130375
           mkdir -p "$baseline"
-          git archive 9d7ac5f3e29703ece2278d59ffbb5967b77763e2 | tar -x -C "$baseline"
+          git archive 010c521fa7fdd9139c18368c96f8da68c3130375 | tar -x -C "$baseline"
           (cd "$baseline" && BUNDLE_PATH="$GITHUB_WORKSPACE/vendor/bundle" BUNDLE_GEMFILE="$baseline/Gemfile" bundle exec jekyll build && node "$GITHUB_WORKSPACE/node_modules/purgecss/bin/purgecss.js" -c purgecss.config.js)
           echo "BASELINE_DIR=$baseline/_site" >> "$GITHUB_ENV"
       - name: Validate site contract and visual parity
