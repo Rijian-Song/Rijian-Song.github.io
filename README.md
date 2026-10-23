@@ -11,7 +11,7 @@
 - **Notes** — `_pages/notes.md`, personal writing.
 - **Contact** — `_pages/contact.md`, professional links.
 
-`/cv/` remains a placeholder. `/projects/` is a compatibility entry to Research; `/projects/<slug>/` contains research details. The legacy site is retained pending a separate decision about its public URL.
+`/cv/` remains a placeholder. `/projects/` is a compatibility entry to Research; `/projects/<slug>/` contains research details.
 
 ## Build and preview
 

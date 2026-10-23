@@ -53,10 +53,8 @@ const htmlFiles = walk("_site").filter((p) => p.endsWith(".html"));
 let links = 0;
 for (const file of htmlFiles) {
   const html = read(file);
-  if (!file.startsWith("_site/legacy/")) {
-    assert(!/src="[^"]*(?:masonry|imagesloaded|badge\.dimensions|cloudfront.net\/assets\/embed)/i.test(html), file + ": unused script");
-    assert(!/class="[^"]*\bgrid\b/.test(html), file + ": Masonry container requires re-evaluation");
-  }
+  assert(!/src="[^"]*(?:masonry|imagesloaded|badge\.dimensions|cloudfront.net\/assets\/embed)/i.test(html), file + ": unused script");
+  assert(!/class="[^"]*\bgrid\b/.test(html), file + ": Masonry container requires re-evaluation");
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(new Set(ids).size, ids.length, file + ": duplicate IDs");
   for (const m of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
